@@ -2,9 +2,10 @@ pipeline {
     agent any
 
     stages {
-        stage('Plan') {
+        stage('pull') {
             steps {
-                echo 'Planing stage'
+                git branch: 'main', url: 'https://github.com/Abhishekkanawade20/Jenkins.git'
+                echo "hello"
             }
         }
          stage('build') {
