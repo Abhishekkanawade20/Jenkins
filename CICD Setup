@@ -1,0 +1,6 @@
+
+
+
+*********************** Build configuration ************************************************************
+1. add git plugins
+2. Create pipepine --> pipeline defination(Pipeline script from SCM) --> Give path of Github URL and file name which is to be build 
