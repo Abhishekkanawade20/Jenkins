@@ -63,6 +63,13 @@ Cleaun up artifacts created by prior builds.
 3. site phase:
 It generates documentation for this project.
 
+pom.xml
+-----------------
+1. while building the code, if we required any dependency it will collect it from the pom.xml file
+2. pom.xml file contains the all required information, library, plugging, dependancy,
+3. Developer wrote pom.xml.
+4. we can also add maven dependecy here as per requirement from maven repo.
+
 ===========================================================================================================================================================================
 ======================================================================= Command structure =================================================================================
 mvn      goal         argument 
@@ -71,7 +78,7 @@ mvn      goal         argument
 Github token: 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
 
 
-*********************** Build configuration ************************************************************
+**************************************************************** Build configuration *********************************************************************************
 
 =======================================================================================================================================================================
 ******************************************** Maven Installation *************************************************************************************
@@ -95,27 +102,20 @@ Now add the mvn command in environment
 export PATH=$PATH:' /opt/apache-maven-3.9.6/bin'
 
 # source /etc/profile
+# bash
 
 =======================================================================================================================================================================
 we already cloned java application, go into that application dir.
+git clone <java_app_public_repo_url>
 
 # cd Calculator
 # mvn package              ----> To build the package.
 # tree                     ---> You will get a hierechy
 
-also pom.xml file is generated.
+also pom.xml file is generated. # cd calculator
 
-Check targer is generated after running build package command.
+Check target file is generated after running build package command.
 
-====================================================================================================================================================================
-pom.xml
------------------
-1. while building the code, if we required any dependency it will collect it from the pom.xml file
-2. pom.xml file contains the all required information, library, plugging, dependancy,
-3. Developer wrote pom.xml.
-4. we can also add maven dependecy here as per requirement from maven repo.
-
-=====================================================================================================================================================================
 =====================================================================================================================================================================
 Now go to jenkin app :
 ---------------------
@@ -131,7 +131,8 @@ jenkins --> manage jenkins --> tools --> maven configuration --> scroll down and
 come back to our jenkins server:
 
 # cd /Calculatior             ---> Go to application dir
-# mvn clean package
+# mvn clean package           --->  Maven command used to clean the project and then package it into an artifact (e.g., JAR, WAR, etc.). So basically it genrates the artifact
+                                    It generates the artiact in   " /var/lib/jenkins/workspace/pipeline/target " location .
 
 ==> Now add the build stage in our pipeline
 
@@ -175,6 +176,12 @@ FAiled to execute goal porg.apache
    # java --version  and it should be java 11 running.
 
 And code is build successfully. 
+=================================================================================================================================================================================
+so maven generated the artifact in target directory.
+
+/var/lib/jenkins/workspace/pipeline/target/Calculator-1.0-SNAPSHOT.jar
+
+It generates the .jar or .war extetension.
 
 ************************************************* Build finish *******************************************************************************************************************
 
