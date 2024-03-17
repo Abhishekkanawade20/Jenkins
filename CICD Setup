@@ -1,4 +1,8 @@
+=============================================================================================================================================================================
+******************************************** maven command syntax *************************************************************************************
 
+mvn      goal         argument 
+    <sub-command>   <extra parameter>
 
 
 
@@ -11,4 +15,56 @@ Github token: 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
 
 *********************** Build configuration ************************************************************
 1. add git plugins
-2. Create pipepine --> pipeline defination(Pipeline script from SCM) --> Give path of Github URL and file name which is to be build 
+2. Create pipepine --> pipeline defination(Pipeline script from SCM) --> Give path of Github URL and file name which is to be build --> It pull repo
+
+* git clone https://github.com/HouariZegai/Calculator.git   ---> we are cloning java app from github
+
+install tree package on server to check hiierarechy properly *sudo apt install tree
+
+=======================================================================================================================================================================
+******************************************** Maven Installation *************************************************************************************
+ Go to official website of apache.
+
+# wget <maven_url>                  ----> 
+# tar -xvzf apche-maven             ----> extract package
+# mv apache-maven /opt              ----> mv to opt dir
+
+=========================================================================================================================================================================
+******************************************** set environment variables for maven *************************************************************************************
+Now add the mvn command in environment
+
+# sudo vim /etc/profile and add below in file
+
+export PATH=$PATH:' /opt/apache-maven-3.9.6/bin'
+
+# source /etc/profile
+
+=======================================================================================================================================================================
+we already cloned java application, go into that application dir.
+
+# cd Calculator
+# mvn package              ----> To build the package.
+# tree                     ---> You will get a hierechy
+
+also pom.xml file is generated.
+
+Check targer is generated after running build package command.
+
+====================================================================================================================================================================
+pom.xml
+-----------------
+1. while building the code, if we required any dependency it will collect it from the pom.xml file
+2. pom.xml file contains the all required information, library, plugging, dependancy,
+3. Developer wrote pom.xml.
+4. we can also add maven dependecy here as per requirement from maven repo.
+
+=====================================================================================================================================================================
+=====================================================================================================================================================================
+Now go to jenkin app :
+---------------------
+
+
+
+
+
+
