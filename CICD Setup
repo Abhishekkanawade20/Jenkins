@@ -1,9 +1,54 @@
-Pr
+Project: Create a CI/CD pipeline on jenkins app, push build test and deploy complete project.
+-------
+============================================================================================================================================================================
+step 1: Create one server and install java and jenkins.
+-------
 
+sudo apt update
+sudo apt install fontconfig openjdk-17-jre
+java -version
+
+sudo wget -O /etc/yum.repos.d/jenkins.repo \
+    https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+sudo dnf upgrade
+sudo dnf install fontconfig java-17-openjdk
+sudo dnf install jenkins
+sudo systemctl daemon-reload
+
+============================================================================================================================================================================
+step 2: write code in visual code studio and push it on github 
+-------
+
+============================================================================================================================================================================
+
+step 3: CI/CD Pull step.
+-------
+1. add git plugins
+2. Create pipepine --> pipeline defination(Pipeline script from SCM) --> Give path of Github URL and file name which is to be build --> It pull repo
+
+* git clone https://github.com/HouariZegai/Calculator.git   ---> we are cloning java app from github
+
+3. install tree package on server to check hiierarechy properly *sudo apt install tree
 
 =============================================================================================================================================================================
-******************************************** maven command syntax *************************************************************************************
+************************************************************* About maven command syntax *************************************************************************************
+maven: - Maven is a build tool which is used to build artifact.
+       - Maven is a ope-source tool which is used to build application.
 
+maven lifecycle: 
+---------------
+Basically it is a process collection maven lifecycle.
+
+maven lifcycle types:
+1. Default - By default behaviour of lifecycle.
+2. clean - It discard old build.
+3. site - It help of documentation.
+
+
+
+
+------
 mvn      goal         argument 
     <sub-command>   <extra parameter>
 
@@ -17,12 +62,6 @@ Github token: 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
 
 
 *********************** Build configuration ************************************************************
-1. add git plugins
-2. Create pipepine --> pipeline defination(Pipeline script from SCM) --> Give path of Github URL and file name which is to be build --> It pull repo
-
-* git clone https://github.com/HouariZegai/Calculator.git   ---> we are cloning java app from github
-
-install tree package on server to check hiierarechy properly *sudo apt install tree
 
 =======================================================================================================================================================================
 ******************************************** Maven Installation *************************************************************************************
