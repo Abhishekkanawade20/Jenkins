@@ -62,6 +62,42 @@ pom.xml
 =====================================================================================================================================================================
 Now go to jenkin app :
 ---------------------
+Here, we are adding the maven execuatble command path to prvide the maven environment in pipeline.
+
+jenkins --> manage jenkins --> tools --> maven configuration --> scroll down and select maven installation
+
+* Add maven installation:
+       Name = mvn
+       Home_Directory = /opt/apache-maven-3.9.6
+
+--------------------------------------------------------------------------------------------------------------------
+come back to our jenkins server:
+
+# cd /Calculatior             ---> Go to application dir
+# mvn clean package
+
+==> Now add the build stage in our pipeline
+
+pipeline syntax generator:
+------------------------------
+Jenkins --> pipeline --> snipper generator --> sample step (sh:shell script) --> shell script(mvn package build) --> You'll get op : sh 'mvn clean package' 
+
+[o/p] --> add it in build script
+
+=====================================================================================================================================================================
+
+Now add this in build stage in visual code
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+stage('build') {
+            steps {
+                sh '/opt/apache-maven-3.9.6 clean package'
+                echo 'build stage'
+            }
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Now push this code and run pipeline.
+
 
 
 
