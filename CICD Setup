@@ -30,6 +30,11 @@ install tree package on server to check hiierarechy properly *sudo apt install t
 # mv apache-maven /opt              ----> mv to opt dir
 
 =========================================================================================================================================================================
+Need to generate archetype:
+---------------------------
+mvn archetype:generate -DgroupId=com.<app_name> -DartifactId=<app_name> -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false
+
+=========================================================================================================================================================================
 ******************************************** set environment variables for maven *************************************************************************************
 Now add the mvn command in environment
 
@@ -90,14 +95,36 @@ Now add this in build stage in visual code
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 stage('build') {
             steps {
-                sh '/opt/apache-maven-3.9.6 clean package'
+                sh '/opt/apache-maven-3.9.6/mvn clean package'
                 echo 'build stage'
             }
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-Now push this code and run pipeline.
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Now push this code and run pipeline. And you will get below error.
 
+Error 1:
+-------
+Your pom.xml file is not located at /var/lib/jenkins/workspace/pipeline.
+
+solution 1: copy pom.xml file from application dir and paste it at workspace path.
+          # cp /Calculator/pom.xml /var/lib/jenkins/workspace/pipeline
+
+solution 2: # mvn -f path/to/pom.xml compile  (explore more).
+
+Error 2: it is supporting java11 version only not java 17
+--------
+FAiled to execute goal porg.apache 
+
+==> .mojo is not supported by java-17, so we need to install java-11 or below version.
+   # sudo update-alternatives --config java
+   # Now select the java-11 version and enter
+   # java --version  and it should be java 11 running.
+
+And code is build successfully. 
+
+************************************************* Build finish *******************************************************************************************************************
 
 
 
