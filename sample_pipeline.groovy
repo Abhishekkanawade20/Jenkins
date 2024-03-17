@@ -10,7 +10,7 @@ pipeline {
         }
          stage('build') {
             steps {
-                sh '/opt/apache-maven-3.9.6 clean package'
+                sh '/opt/apache-maven-3.9.6/bin clean package'
                 echo 'build stage'
             }
         }
