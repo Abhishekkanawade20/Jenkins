@@ -16,6 +16,7 @@ pipeline {
         }
          stage('test') {
             steps {
+                /opt/apache-maven-3.9.6/bin/mvn sonar:sonar -Dsonar.projectKey=Calculator -Dsonar.host.url=http://13.126.235.162:9000 -Dsonar.login=62dabd732b94780b83e77bce03afa0e9ab5805b9
                 echo 'test stage'
             }
         }
