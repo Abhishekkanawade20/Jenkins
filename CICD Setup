@@ -1,25 +1,84 @@
-=============================================================================================================================================================================
-******************************************** maven command syntax *************************************************************************************
+Project: Create a CI/CD pipeline on jenkins app, push build test and deploy complete project.
+-------
+============================================================================================================================================================================
+step 1: Create one server and install java and jenkins.
+-------
 
-mvn      goal         argument 
-    <sub-command>   <extra parameter>
+sudo apt update
+sudo apt install fontconfig openjdk-17-jre
+java -version
 
+sudo wget -O /etc/yum.repos.d/jenkins.repo \
+    https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+sudo dnf upgrade
+sudo dnf install fontconfig java-17-openjdk
+sudo dnf install jenkins
+sudo systemctl daemon-reload
 
+============================================================================================================================================================================
+step 2: write code in visual code studio and push it on github 
+-------
 
-Github token: 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
+============================================================================================================================================================================
 
-===============================================================================================
-#sudo update-alternatives --config java -- To switch java version from 17 to 11
-
-
-
-*********************** Build configuration ************************************************************
+step 3: CI/CD Pull step.
+-------
 1. add git plugins
 2. Create pipepine --> pipeline defination(Pipeline script from SCM) --> Give path of Github URL and file name which is to be build --> It pull repo
 
 * git clone https://github.com/HouariZegai/Calculator.git   ---> we are cloning java app from github
 
-install tree package on server to check hiierarechy properly *sudo apt install tree
+3. install tree package on server to check hiierarechy properly *sudo apt install tree
+
+=============================================================================================================================================================================
+************************************************************* About maven command syntax *************************************************************************************
+maven: - Maven is a build tool which is used to build artifact.
+       - Maven is a ope-source tool which is used to build application.
+
+maven lifecycle: 
+---------------
+Basically it is a process collection maven lifecycle.
+
+maven lifcycle types:
+1. Default - By default behaviour of lifecycle.
+2. clean - It discard old build.
+3. site - It help of documentation.
+
+Maven phases:
+--------------
+1. default phases
+
+1. validate - validate the project is correct and all necessary information is available
+2. compile - compile the source code of the project
+3. test - test the compiled source code using a suitable unit testing framework. These tests should not require the code be packaged or deployed
+4. package - take the compiled code and package it in its distributable format, such as a JAR.
+5. verify - run any checks on results of integration tests to ensure quality criteria are met
+6. install - install the package into the local repository, for use as a dependency in other projects locally
+7. deploy - done in the build environment, copies the final package to the remote repository for sharing with other developers and projects.
+
+2. Clean phase:
+Cleaun up artifacts created by prior builds.
+
+3. site phase:
+It generates documentation for this project.
+
+pom.xml
+-----------------
+1. while building the code, if we required any dependency it will collect it from the pom.xml file
+2. pom.xml file contains the all required information, library, plugging, dependancy,
+3. Developer wrote pom.xml.
+4. we can also add maven dependecy here as per requirement from maven repo.
+
+===========================================================================================================================================================================
+======================================================================= Command structure =================================================================================
+mvn      goal         argument 
+    <sub-command>   <extra parameter>
+
+Github token: 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
+
+
+**************************************************************** Build configuration *********************************************************************************
 
 =======================================================================================================================================================================
 ******************************************** Maven Installation *************************************************************************************
@@ -30,6 +89,11 @@ install tree package on server to check hiierarechy properly *sudo apt install t
 # mv apache-maven /opt              ----> mv to opt dir
 
 =========================================================================================================================================================================
+Need to generate archetype:
+---------------------------
+mvn archetype:generate -DgroupId=com.<app_name> -DartifactId=<app_name> -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false
+
+=========================================================================================================================================================================
 ******************************************** set environment variables for maven *************************************************************************************
 Now add the mvn command in environment
 
@@ -38,27 +102,20 @@ Now add the mvn command in environment
 export PATH=$PATH:' /opt/apache-maven-3.9.6/bin'
 
 # source /etc/profile
+# bash
 
 =======================================================================================================================================================================
 we already cloned java application, go into that application dir.
+git clone <java_app_public_repo_url>
 
 # cd Calculator
 # mvn package              ----> To build the package.
 # tree                     ---> You will get a hierechy
 
-also pom.xml file is generated.
+also pom.xml file is generated. # cd calculator
 
-Check targer is generated after running build package command.
+Check target file is generated after running build package command.
 
-====================================================================================================================================================================
-pom.xml
------------------
-1. while building the code, if we required any dependency it will collect it from the pom.xml file
-2. pom.xml file contains the all required information, library, plugging, dependancy,
-3. Developer wrote pom.xml.
-4. we can also add maven dependecy here as per requirement from maven repo.
-
-=====================================================================================================================================================================
 =====================================================================================================================================================================
 Now go to jenkin app :
 ---------------------
@@ -74,7 +131,8 @@ jenkins --> manage jenkins --> tools --> maven configuration --> scroll down and
 come back to our jenkins server:
 
 # cd /Calculatior             ---> Go to application dir
-# mvn clean package
+# mvn clean package           --->  Maven command used to clean the project and then package it into an artifact (e.g., JAR, WAR, etc.). So basically it genrates the artifact
+                                    It generates the artiact in   " /var/lib/jenkins/workspace/pipeline/target " location .
 
 ==> Now add the build stage in our pipeline
 
@@ -90,14 +148,42 @@ Now add this in build stage in visual code
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 stage('build') {
             steps {
-                sh '/opt/apache-maven-3.9.6 clean package'
+                sh '/opt/apache-maven-3.9.6/mvn clean package'
                 echo 'build stage'
             }
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-Now push this code and run pipeline.
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Now push this code and run pipeline. And you will get below error.
 
+Error 1:
+-------
+Your pom.xml file is not located at /var/lib/jenkins/workspace/pipeline.
+
+solution 1: copy pom.xml file from application dir and paste it at workspace path.
+          # cp /Calculator/pom.xml /var/lib/jenkins/workspace/pipeline
+
+solution 2: # mvn -f path/to/pom.xml compile  (explore more).
+
+Error 2: it is supporting java11 version only not java 17
+--------
+FAiled to execute goal porg.apache 
+
+==> .mojo is not supported by java-17, so we need to install java-11 or below version.
+   # sudo update-alternatives --config java
+   # Now select the java-11 version and enter
+   # java --version  and it should be java 11 running.
+
+And code is build successfully. 
+=================================================================================================================================================================================
+so maven generated the artifact in target directory.
+
+/var/lib/jenkins/workspace/pipeline/target/Calculator-1.0-SNAPSHOT.jar
+
+It generates the .jar or .war extetension.
+
+************************************************* Build finish *******************************************************************************************************************
 
 
 
