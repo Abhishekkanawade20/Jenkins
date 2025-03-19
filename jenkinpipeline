@@ -8,7 +8,7 @@ pipeline {
             steps {
                 script {
                     // Clone your GitHub repository
-                    git 'https://github.com/Abhishekkanawade20/Jenkins'
+                     git url: 'https://github.com/Abhishekkanawade20/Jenkins', branch: 'main'
                     
                     // Run Maven build
                     sh 'mvn clean install'
