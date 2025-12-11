@@ -130,7 +130,7 @@ jenkins --> manage jenkins --> tools --> maven configuration --> scroll down and
 --------------------------------------------------------------------------------------------------------------------
 come back to our jenkins server:
 
-# cd /Calculatior             ---> Go to application dir
+# cd /Calculator             ---> Go to application dir
 # mvn clean package           --->  Maven command used to clean the project and then package it into an artifact (e.g., JAR, WAR, etc.). So basically it genrates the artifact
                                     It generates the artiact in   " /var/lib/jenkins/workspace/pipeline/target " location .
 
